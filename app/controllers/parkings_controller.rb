@@ -5,7 +5,14 @@ class ParkingsController < ApplicationController
   end
 
   def create
-    @parking = Parking.new( :parking_type => "guest", :start_at => Time.now)
+    @parking = Parking.new(  :start_at => Time.now )
+
+    if current_user
+      @parking.parking_type = params[:parking][:parking_type]
+      @parking.user = current_user
+    else
+      @parking.parking_type = "guest"
+    end
     @parking.save!
 
     redirect_to parking_path(@parking)
@@ -18,11 +25,11 @@ class ParkingsController < ApplicationController
   def update
     @parking = Parking.find(params[:id])
     @parking.end_at = Time.now
-    @parking.calulate_amount
+    @parking.calculate_amount
 
     @parking.save!
 
     redirect_to parking_path(@parking)
   end
-  
+
 end

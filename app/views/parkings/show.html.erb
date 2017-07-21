@@ -2,6 +2,8 @@
 
 <% if @parking.amount.present? %>
 
+<p>计费方式 <%= @parking.parking_type %></p>
+
 <p>从
   <%= @parking.start_at %>
   至
